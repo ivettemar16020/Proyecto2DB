@@ -1,5 +1,6 @@
 from compiler.sqlListener import sqlListener
 from compiler.sqlParser import sqlParser
+from compiler.DatabaseManager import DatabaseManager as hello
 
 class CYDBMSListener(sqlListener):
     def __init__(self):
@@ -8,6 +9,7 @@ class CYDBMSListener(sqlListener):
     def enterCreate_database_stmt(self, ctx:sqlParser.Create_database_stmtContext):
         print("Generando nueva base de datos")
         print(ctx.database_name().getText())
+        hello.createDatabase(self,ctx.database_name().getText())
         
     def enterShow_databases_stmt(self, ctx:sqlParser.Show_databases_stmtContext):
         print("BITCONNNEEEECT")

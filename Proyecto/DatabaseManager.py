@@ -1,6 +1,8 @@
 import os
 
 class DatabaseManager:
+    def __init__(self):
+        pass
         
     def createDatabase(self, name):
         directory = '../Bases/'+ name +'/'
