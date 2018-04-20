@@ -8,10 +8,15 @@ class CYDBMSListener(sqlListener):
     def enterCreate_database_stmt(self, ctx:sqlParser.Create_database_stmtContext):
         print("Generando nueva base de datos")
         print(ctx.database_name().getText())
+        
+    def enterShow_databases_stmt(self, ctx:sqlParser.Show_databases_stmtContext):
+        print("BITCONNNEEEECT")
 
-"""
-    def enterShow_databases_stmt():
+    def enterUse_database_stmt(self, ctx:sqlParser.Use_database_stmtContext):
+        print("cambiando a base de datos "+ctx.database_name().getText())
 
-    	for databaseName in databaseManager.getDatabases():
-    		print(databaseName)
-"""
+    def enterShow_tables_stmt(self, ctx:sqlParser.Show_tables_stmtContext):
+        print("las tablas son estas...")
+
+    def enterSelect_core(self, ctx:sqlParser.Select_coreContext):
+        print("yes")
