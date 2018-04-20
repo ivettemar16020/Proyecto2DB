@@ -1,10 +1,21 @@
-class DatabaseManager:
-	"""
-    def createDatabase(self, name):
+import os
 
-		# Crear la carpeta en el sistema de archivos
+class DatabaseManager:
+        
+    def createDatabase(self, name):
+        directory = '../Bases/'+ name +'/'
+        try:
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                print ('Bases de datos' + name + 'creada')
+        except OSError:
+                print ('Error: Creating directory. ' +  directory)
 
     def getDatabases(self):
+        bases = os.listdir('../Bases/')
+        print (bases)
 
-		# Localizar las bases de datos almacenadas en el sistema de archivos y retornar el nombre de cada una
-"""
+    def showTables(self, db_name):
+        tables = os.listdir('../Bases/' + db_name + '/')
+        print (tables)
+            
