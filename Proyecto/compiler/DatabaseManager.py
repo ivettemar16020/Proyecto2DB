@@ -13,7 +13,9 @@ class DatabaseManager:
 
     def getDatabases(self):
         bases = os.listdir('../Bases/')
-        print (bases)
+        for base in bases: 
+            print(base)
+
 
     def showTables(self, db_name):
         tables = os.listdir('../Bases/' + db_name + '/')
