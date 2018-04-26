@@ -43,7 +43,7 @@ Uso: python cli.py
 Las construcciones validas para esta gramatica son todas aquellas 
 '''
 def main(argv):
-    print("Bienvenido al DBMS de Yvette y Cristian: CYDBMS")
+    print("Bienvenido al DBMS de Ivette, Cristopher y Cristian: CYDBMS")
     while True:
         try:
             text = input("> ")
