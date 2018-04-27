@@ -1,5 +1,8 @@
 import os
 import pathlib
+import shutil
+
+database = ""
 
 class DatabaseManager:
         
@@ -22,12 +25,21 @@ class DatabaseManager:
         oName = pathlib.Path(directory + oldName)
 
         if (res == "y"):
-            print("El nombre de la base de datos: " + oldName + " ha cambiado a: " + newName)
             oName.rename(directory + newName)
+            print("El nombre de la base de datos: " + oldName + " ha cambiado a: " + newName)   
         else:
             print("No se realizaron los cambios")
 
-    def showTables(self, db_name):
-        tables = os.listdir('../Bases/' + db_name + '/')
-        print (tables)
-            
+    def dropDatabase(self, name):
+        directory = '../Bases/' + name + '/'
+        shutil.rmtree(directory, ignore_errors=True)
+
+    def useDatabase(self, name): 
+        directory = '../Bases/'
+        ver = os.path.isdir(directory + name + '/')
+
+        if (ver == True):
+            database = name
+            print("Ahora esta usando la base de datos " + database)
+        else:
+            print("No existe la base de datos!")

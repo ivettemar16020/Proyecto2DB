@@ -24,7 +24,9 @@ class CYDBMSListener(sqlListener):
     #iii) Borra una base de datos
     def enterDrop_database_stmt(self, ctx:sqlParser.Drop_database_stmtContext):
         #Query: DROP DATABASE nombre; 
-        print("La base de datos " + ctx.database_name().getText() + " ha sido eliminada")
+        dbName = ctx.database_name().getText()
+        hello.dropDatabase(self, dbName)
+        print("La base de datos " + dbName + " ha sido eliminada")
 
     #iv) Muestra las bases de datos actuales 
     def enterShow_databases_stmt(self, ctx:sqlParser.Show_databases_stmtContext):
@@ -34,7 +36,9 @@ class CYDBMSListener(sqlListener):
 
     #v) Selecciona la base de datos a trabajar 
     def enterUse_database_stmt(self, ctx:sqlParser.Use_database_stmtContext):
-        print("La base de datos a utilizar es: "+ctx.database_name().getText())
+        #Query: USE DATABASE name; 
+        name = ctx.database_name().getText()
+        hello.useDatabase(self, name)
 
    
    #vi) Crea una nueva tabla y un nuevo archivo 
