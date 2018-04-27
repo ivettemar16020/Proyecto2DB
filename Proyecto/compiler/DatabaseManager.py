@@ -1,6 +1,7 @@
 import os
 import pathlib
 import shutil
+import json
 
 database = ""
 
@@ -8,15 +9,54 @@ class DatabaseManager:
         
     def createDatabase(self, name):
         directory = '../Bases/'+ name +'/'
+        directory1 = '../Bases/'
+        directory2 = '../Bases/'+ name +'/' + "mData.json"
         try:
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-                print ('Bases de datos' + name + 'creada')
+            if not os.path.exists(directory1):
+                os.makedirs(directory1)
+                print("Bases no existe, se esta creando")
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                    print ('Bases de datos ' + name + ' creada')
+                    if not os.path.exists(directory2):
+                        print('Creando json')
+                        metadata = {}
+                        metadata['bases'] = [] 
+                        with open(directory2, 'w') as data:
+                            json.dump(metadata, data)
+                        print(metadata)
+                    else:
+                        print(name + ' ya existe, prueba con otro nombre')
+            else: 
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                    print ('Bases de datos ' + name + ' creada')
+                    if not os.path.exists(directory2):
+                        print('Creando json')
+                        metadata = {}
+                        metadata['bases'] = [] 
+                        with open(directory2, 'w') as data:
+                            json.dump(metadata, data)
+                        print(metadata)
+                    else:
+                        print(name + ' ya existe, prueba con otro nombre')
+                else:
+                    if not os.path.exists(directory2):
+                        print('Creando json')
+                        metadata = {}
+                        metadata['bases'] = [] 
+                        with open(directory2, 'w') as data:
+                            json.dump(metadata, data)
+                        print(metadata)
+                    else:
+                        print(name + ' ya existe, prueba con otro nombre')
         except OSError:
-                print ('Error: Creating directory. ' +  directory)
+                print ('Error: Creando directorio ' +  directory)
+
 
     def getDatabases(self):
         bases = os.listdir('../Bases/')
+        print("Las bases de datos disponibles son: ")
         for base in bases: 
             print(base)
 
@@ -42,4 +82,11 @@ class DatabaseManager:
             database = name
             print("Ahora esta usando la base de datos " + database)
         else:
-            print("No existe la base de datos!")
+            print("La base de datos a la que desea acceder no existe")
+
+    def createTable(self, name):
+        print("something")
+
+    def showTables(self, db_name):
+        tables = os.listdir('../Bases/' + db_name + '/')
+        print (tables)

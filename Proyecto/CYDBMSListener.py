@@ -1,14 +1,16 @@
 from compiler.sqlListener import sqlListener
 from compiler.sqlParser import sqlParser
 from compiler.DatabaseManager import DatabaseManager as hello
+import os
+import json
 
 class CYDBMSListener(sqlListener):
     def __init__(self):
         pass
-    
+
     #i) Crea una nueva base de datos y un nuevo directorio
     def enterCreate_database_stmt(self, ctx:sqlParser.Create_database_stmtContext):
-        print("Generando nueva base de datos ")
+        #print("Generando nueva base de datos ")
         #print(ctx.database_name().getText())
         hello.createDatabase(self,ctx.database_name().getText())
     
@@ -22,6 +24,7 @@ class CYDBMSListener(sqlListener):
         hello.alterDatabase(self, oldName, newName, respuesta)    
      
     #iii) Borra una base de datos
+    #FALTA: “¿Borrar base de datos nombre_BD con N registros? (si/no)” Donde N es la sumatoria de los registros de todas las tablas en la base de datos.
     def enterDrop_database_stmt(self, ctx:sqlParser.Drop_database_stmtContext):
         #Query: DROP DATABASE nombre; 
         dbName = ctx.database_name().getText()
@@ -31,7 +34,6 @@ class CYDBMSListener(sqlListener):
     #iv) Muestra las bases de datos actuales 
     def enterShow_databases_stmt(self, ctx:sqlParser.Show_databases_stmtContext):
         #Query: SHOW DATABASES;
-        print("Las bases de datos disponibles son: ")
         hello.getDatabases(self)
 
     #v) Selecciona la base de datos a trabajar 
