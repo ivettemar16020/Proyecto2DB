@@ -3,7 +3,6 @@ from compiler.sqlParser import sqlParser
 from compiler.DatabaseManager import DatabaseManager as hello
 import os
 import json
-import pdb
 
 class CYDBMSListener(sqlListener):
     def __init__(self):
@@ -47,10 +46,9 @@ class CYDBMSListener(sqlListener):
    #vi) Crea una nueva tabla y un nuevo archivo 
     def enterCreate_table_stmt(self, ctx:sqlParser.Create_table_stmtContext):
         #Query: create table hola(column1 hola);
-        #pdb.set_trace()
-        columns = ctx.column_def()
-        tabName = ctx.table_name().getText()
-        hello.createTable(self, tabName, columns)
+        print("Creando tabla")
+        print(ctx.table_name().getText())
+        #hello.createTable(self, ctx.table_name().getText())
 
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):
@@ -81,3 +79,15 @@ class CYDBMSListener(sqlListener):
     def enterSelect_core(self, ctx:sqlParser.Select_coreContext):
         #Query: Select * from table_name;
         print("Entro al select")
+
+    def enterInsert_stmt(self, ctx:sqlParser.Insert_stmtContext):
+        print(ctx.table_name().getText())
+        prisma = ctx.expr()
+        for i in range(len(prisma)):
+            print(prisma[i].getText())
+        albedo = ctx.column_name()
+        for i in range(len(albedo)):
+            print(albedo[i].getText())
+        
+
+    
