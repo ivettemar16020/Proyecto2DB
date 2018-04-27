@@ -3,6 +3,7 @@ from compiler.sqlParser import sqlParser
 from compiler.DatabaseManager import DatabaseManager as hello
 import os
 import json
+import pdb
 
 class CYDBMSListener(sqlListener):
     def __init__(self):
@@ -46,9 +47,10 @@ class CYDBMSListener(sqlListener):
    #vi) Crea una nueva tabla y un nuevo archivo 
     def enterCreate_table_stmt(self, ctx:sqlParser.Create_table_stmtContext):
         #Query: create table hola(column1 hola);
-        print("Creando tabla")
-        print(ctx.table_name().getText())
-        #hello.createTable(self, ctx.table_name().getText())
+        #pdb.set_trace()
+        columns = ctx.column_def()
+        tabName = ctx.table_name().getText()
+        hello.createTable(self, tabName, columns)
 
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):
