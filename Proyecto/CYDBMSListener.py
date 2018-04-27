@@ -15,7 +15,11 @@ class CYDBMSListener(sqlListener):
     #ii) Cambia el nombre de una base de datos
     def enterAlter_database_stmt(self, ctx:sqlParser.Alter_database_stmtContext):
         #Query: ALTER DATABASE nombre RENAME TO nuevo;
-        print("La base de datos " + ctx.database_name().getText() + " ha cambiado de nombre a " + ctx.new_database_name().getText())    
+        oldName =  ctx.database_name().getText()
+        newName =  ctx.new_database_name().getText()
+        print("¿Desea renombrar" + oldName + " y cambiarla por " + newName + "? (y/n)")
+        respuesta = input()
+        hello.alterDatabase(self, oldName, newName, respuesta)    
      
     #iii) Borra una base de datos
     def enterDrop_database_stmt(self, ctx:sqlParser.Drop_database_stmtContext):
