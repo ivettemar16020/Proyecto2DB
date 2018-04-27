@@ -87,13 +87,16 @@ class DatabaseManager:
     def createTable(self, name, columns):
         directory2 = '../Bases/'+ database +'/' + "mData.json"
         arrColumns = []
+        arrTypes = []
         for column in columns: 
             arrColumns.append(column.column_name().getText())
+            arrTypes.append(column.type_name().getText())
 
         data = {}
         data[name] = []
         data[name].append({
-            'column': arrColumns[0]
+            'column': arrColumns[0],
+            'type' : arrTypes[0]
             })
         with open(directory2, 'w') as data1:
             json.dump(data, data1)
