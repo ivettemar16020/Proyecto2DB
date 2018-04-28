@@ -81,6 +81,7 @@ class CYDBMSListener(sqlListener):
         print("Entro al select")
 
     def enterInsert_stmt(self, ctx:sqlParser.Insert_stmtContext):
+        #Query: Insert into Table1 values(prueba,test)
         print(ctx.table_name().getText())
         prisma = ctx.expr()
         for i in range(len(prisma)):
