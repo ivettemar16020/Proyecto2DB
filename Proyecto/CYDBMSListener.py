@@ -52,11 +52,11 @@ class CYDBMSListener(sqlListener):
 
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):
-        print("La tabla " + ctx.table_name().getText() + " ha cambiado de nombre a " + ctx.new_table_name().getText())
+        #print("La tabla " + ctx.table_name().getText() + " ha cambiado de nombre a " + ctx.new_table_name().getText())
+        #viii) Alter table con una accion definida por el usuario 
+        specificStmt = ctx.alter_table_specific_stmt().getText()
+        print(specificStmt)
 
-    #viii) Alter table con una accion definida por el usuario 
-    #Hmmmm
-   
     #ix) Borra una tabla 
     def enterDrop_table_stmt(self, ctx:sqlParser.Drop_table_stmtContext):
         #Query: DROP TABLE table_name;
