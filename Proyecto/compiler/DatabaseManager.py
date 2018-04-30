@@ -84,23 +84,44 @@ class DatabaseManager:
         else:
             print("La base de datos a la que desea acceder no existe")
 
-    def createTable(self, name, columns):
-        directory2 = '../Bases/'+ database +'/' + "mData.json"
+    def createTable(self, name, columns, database):
         arrColumns = []
         arrTypes = []
         for column in columns: 
             arrColumns.append(column.column_name().getText())
             arrTypes.append(column.type_name().getText())
 
-        data = {}
-        data[name] = []
-        data[name].append({
-            'column': arrColumns[0],
-            'type' : arrTypes[0]
+        datadir = '../Bases/'+ database +'/' + name + ".json"
+		typedir = '../Bases/'+ database +'/' + name + "types.json"
+		
+		numCols = len(arrColumns)
+		
+		data = {}
+        data['types'] = []
+        for x in range(0, numCols):
+            data['types'].append({
+                'column': arrColumns[x],
+                'type' : arrTypes[x]
             })
-        with open(directory2, 'w') as data1:
-            json.dump(data, data1)
-        print("Se creo la tabla " + name)
+	
+        with open(typedir, 'w') as dataT:
+            json.dump(data, dataT)
+		
+		
+		dictCols = {}
+        for y in range(0, numCols):
+            dictCols[arrColumns[y]] = ''	
+		
+        data2 = {}
+        data2[name] = []
+        data2[name].append(
+            dictCols
+        )
+	
+        with open(datadir, 'w') as dataD:
+            json.dump(data2, dataD)
+        
+		print("Se creo la tabla " + name)
 
     def showTables(self, db_name):
         tables = os.listdir('../Bases/' + db_name + '/')
