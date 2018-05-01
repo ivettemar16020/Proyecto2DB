@@ -46,9 +46,13 @@ class CYDBMSListener(sqlListener):
    #vi) Crea una nueva tabla y un nuevo archivo 
     def enterCreate_table_stmt(self, ctx:sqlParser.Create_table_stmtContext):
         #Query: create table hola(column1 hola);
+        #Query con constraint: create table people (ID int, constraint PRIMARY KEY(ID));
         print("Creando tabla")
         #print(ctx.table_name().getText())
         hello.createTable(self, ctx.table_name().getText(), ctx.column_def())
+        constraint_list = ctx.table_constraint()
+        for i in range(len(constraint_list)):
+            print(constraint_list[i].getText())
 
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):
