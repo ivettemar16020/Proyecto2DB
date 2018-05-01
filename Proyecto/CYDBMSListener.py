@@ -47,8 +47,8 @@ class CYDBMSListener(sqlListener):
     def enterCreate_table_stmt(self, ctx:sqlParser.Create_table_stmtContext):
         #Query: create table hola(column1 hola);
         print("Creando tabla")
-        print(ctx.table_name().getText())
-        #hello.createTable(self, ctx.table_name().getText())
+        #print(ctx.table_name().getText())
+        hello.createTable(self, ctx.table_name().getText(), ctx.column_def())
 
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):

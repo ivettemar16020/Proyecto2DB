@@ -75,6 +75,7 @@ class DatabaseManager:
         shutil.rmtree(directory, ignore_errors=True)
 
     def useDatabase(self, name): 
+        global database
         directory = '../Bases/'
         ver = os.path.isdir(directory + name + '/')
 
@@ -84,7 +85,8 @@ class DatabaseManager:
         else:
             print("La base de datos a la que desea acceder no existe")
 
-    def createTable(self, name, columns, database):
+    def createTable(self, name, columns):
+        global database
         arrColumns = []
         arrTypes = []
         for column in columns: 
@@ -92,36 +94,35 @@ class DatabaseManager:
             arrTypes.append(column.type_name().getText())
 
         datadir = '../Bases/'+ database +'/' + name + ".json"
-		typedir = '../Bases/'+ database +'/' + name + "types.json"
-		
-		numCols = len(arrColumns)
-		
-		data = {}
+        typedir = '../Bases/'+ database +'/' + name + "types.json"
+
+        numCols = len(arrColumns)
+
+        data = {}
         data['types'] = []
         for x in range(0, numCols):
             data['types'].append({
                 'column': arrColumns[x],
                 'type' : arrTypes[x]
             })
-	
+
         with open(typedir, 'w') as dataT:
             json.dump(data, dataT)
-		
-		
-		dictCols = {}
+
+        dictCols = {}
         for y in range(0, numCols):
-            dictCols[arrColumns[y]] = ''	
-		
+            dictCols[arrColumns[y]] = ''
+
         data2 = {}
         data2[name] = []
         data2[name].append(
             dictCols
         )
-	
+        
         with open(datadir, 'w') as dataD:
             json.dump(data2, dataD)
         
-		print("Se creo la tabla " + name)
+        print("Se creo la tabla " + name)
 
     def showTables(self, db_name):
         tables = os.listdir('../Bases/' + db_name + '/')
