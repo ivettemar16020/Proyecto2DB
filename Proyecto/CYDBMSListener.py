@@ -21,7 +21,7 @@ class CYDBMSListener(sqlListener):
         newName =  ctx.new_database_name().getText()
         print("¿Desea renombrar" + oldName + " y cambiarla por " + newName + "? (y/n)")
         respuesta = input()
-        hello.alterDatabase(self, oldName, newName, respuesta)    
+        hello.alterDatabase(self, oldName, newName, respuesta)
      
     #iii) Borra una base de datos
     #FALTA: “¿Borrar base de datos nombre_BD con N registros? (si/no)” Donde N es la sumatoria de los registros de todas las tablas en la base de datos.
@@ -65,14 +65,15 @@ class CYDBMSListener(sqlListener):
     #ix) Borra una tabla 
     def enterDrop_table_stmt(self, ctx:sqlParser.Drop_table_stmtContext):
         #Query: DROP TABLE table_name;
-        print("Eliminando tabla")
-        print(ctx.table_name().getText())
+        tableName = ctx.table_name().getText()
+        print("¿Está seguro que desea borrar la tabla " + tableName+ "? (y/n)")
+        respuesta = input()
+        hello.dropTable(self, tableName, respuesta)
 
     #x) Muestra las tablas de la base de datos actual, si hay una en uso
     def enterShow_tables_stmt(self, ctx:sqlParser.Show_tables_stmtContext):
         #Query: show tables;
-        print("las tablas son estas...")
-        hello.showTables(self, "hola")
+        hello.showTables(self)
 
     #xi) Muestra la descripción de columnas de una tabla 
     #    en la base de datos incluyendo las restricciones

@@ -124,9 +124,18 @@ class DatabaseManager:
         
         print("Se creo la tabla " + name)
 
-    def showTables(self, db_name):
-        tables = os.listdir('../Bases/' + db_name + '/')
-        print (tables)
+    def showTables(self):
+        global database
+        #Se debe arreglar esto 
+        tables = os.listdir('../Bases/' + database + '/')
+        print ("Las tablas existentes en " + database + " son: " + tables)
+
+    def dropTable(self, table_name, respuesta): 
+        if respuesta == "y": 
+            #drop table
+            print ("La tabla '" + table_name + "' ha sido eliminada exitosamente")
+        else: 
+            print("La tabla '" + table_name + "' no ha sido eliminada")
 
     def insert(self, table_name, columns, values): 
         print("Se realizaran los inserts en la tabla: " + table_name)
