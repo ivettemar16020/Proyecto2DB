@@ -127,3 +127,12 @@ class DatabaseManager:
     def showTables(self, db_name):
         tables = os.listdir('../Bases/' + db_name + '/')
         print (tables)
+
+    def insert(self, table_name, columns, values): 
+        print("Se realizaran los inserts en la tabla: " + table_name)
+        
+        for column in columns:
+            print(column.getText()) 
+
+        for value in values: 
+            print(value.getText())

@@ -88,13 +88,10 @@ class CYDBMSListener(sqlListener):
     def enterInsert_stmt(self, ctx:sqlParser.Insert_stmtContext):
         #Query: Insert into Table1 values(prueba,test)
         #Query: Insert into Table1(column1,column2) values(prueba,test)
-        print(ctx.table_name().getText())
-        prisma = ctx.expr()
-        for i in range(len(prisma)):
-            print(prisma[i].getText())
-        albedo = ctx.column_name()
-        for i in range(len(albedo)):
-            print(albedo[i].getText())
-        
 
-    
+        #Parametros
+        tableName = ctx.table_name().getText()
+        columnas = ctx.column_name()
+        values = ctx.expr()
+        
+        hello.insert(self, tableName, columnas, values)
