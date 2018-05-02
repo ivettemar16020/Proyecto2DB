@@ -137,6 +137,12 @@ class DatabaseManager:
         else: 
             print("La tabla '" + table_name + "' no ha sido eliminada")
 
+    def alterTabName(self, old_name, new_name): 
+        print(old_name + " " + new_name)
+
+    def showColumns(self, table_name): 
+        print("Las columnas de la tabla " + table_name + " son: ")
+
     def insert(self, table_name, columns, values): 
         print("Se realizaran los inserts en la tabla: " + table_name)
         

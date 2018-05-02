@@ -58,9 +58,15 @@ class CYDBMSListener(sqlListener):
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):
         #print("La tabla " + ctx.table_name().getText() + " ha cambiado de nombre a " + ctx.new_table_name().getText())
+        oldName = ctx.table_name().getText()
+
         #viii) Alter table con una accion definida por el usuario 
-        specificStmt = ctx.alter_table_specific_stmt().getText()
-        print(specificStmt)
+        specificStmt = ctx.alter_table_specific_stmt()
+        #print(specificStmt)
+        #Cuando el query es: "alter table name rename to new_name"
+        if (isinstance(specificStmt, sqlParser.AlterRenameToContext)):
+            newName = specificStmt.new_table_name().getText()
+            hello.alterTabName(self, oldName, newName)
 
     #ix) Borra una tabla 
     def enterDrop_table_stmt(self, ctx:sqlParser.Drop_table_stmtContext):
@@ -79,7 +85,8 @@ class CYDBMSListener(sqlListener):
     #    en la base de datos incluyendo las restricciones
     def enterShow_columns_stmt(self, ctx:sqlParser.Show_columns_stmtContext):
         #Query: SHOW COLUMNS FROM nombre;
-        print("Columnas")
+        tableName = ctx.table_name().getText()
+        hello.showColumns(self, tableName)
 
     #SELECT 
     def enterSelect_core(self, ctx:sqlParser.Select_coreContext):
