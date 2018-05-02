@@ -21,7 +21,7 @@ class CYDBMSListener(sqlListener):
         newName =  ctx.new_database_name().getText()
         print("¿Desea renombrar" + oldName + " y cambiarla por " + newName + "? (y/n)")
         respuesta = input()
-        hello.alterDatabase(self, oldName, newName, respuesta)
+        hello.alterDatabase(self, oldName, newName, respuesta)    
      
     #iii) Borra una base de datos
     #FALTA: “¿Borrar base de datos nombre_BD con N registros? (si/no)” Donde N es la sumatoria de los registros de todas las tablas en la base de datos.
@@ -58,35 +58,27 @@ class CYDBMSListener(sqlListener):
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):
         #print("La tabla " + ctx.table_name().getText() + " ha cambiado de nombre a " + ctx.new_table_name().getText())
-        oldName = ctx.table_name().getText()
-
         #viii) Alter table con una accion definida por el usuario 
-        specificStmt = ctx.alter_table_specific_stmt()
-        #print(specificStmt)
-        #Cuando el query es: "alter table name rename to new_name"
-        if (isinstance(specificStmt, sqlParser.AlterRenameToContext)):
-            newName = specificStmt.new_table_name().getText()
-            hello.alterTabName(self, oldName, newName)
+        specificStmt = ctx.alter_table_specific_stmt().getText()
+        print(specificStmt)
 
     #ix) Borra una tabla 
     def enterDrop_table_stmt(self, ctx:sqlParser.Drop_table_stmtContext):
         #Query: DROP TABLE table_name;
-        tableName = ctx.table_name().getText()
-        print("¿Está seguro que desea borrar la tabla " + tableName+ "? (y/n)")
-        respuesta = input()
-        hello.dropTable(self, tableName, respuesta)
+        print("Eliminando tabla")
+        print(ctx.table_name().getText())
 
     #x) Muestra las tablas de la base de datos actual, si hay una en uso
     def enterShow_tables_stmt(self, ctx:sqlParser.Show_tables_stmtContext):
         #Query: show tables;
-        hello.showTables(self)
+        print("las tablas son estas...")
+        hello.showTables(self, "hola")
 
     #xi) Muestra la descripción de columnas de una tabla 
     #    en la base de datos incluyendo las restricciones
     def enterShow_columns_stmt(self, ctx:sqlParser.Show_columns_stmtContext):
         #Query: SHOW COLUMNS FROM nombre;
-        tableName = ctx.table_name().getText()
-        hello.showColumns(self, tableName)
+        print("Columnas")
 
     #SELECT 
     def enterSelect_core(self, ctx:sqlParser.Select_coreContext):
@@ -96,10 +88,34 @@ class CYDBMSListener(sqlListener):
     def enterInsert_stmt(self, ctx:sqlParser.Insert_stmtContext):
         #Query: Insert into Table1 values(prueba,test)
         #Query: Insert into Table1(column1,column2) values(prueba,test)
+        print(ctx.table_name().getText())
+        prisma = ctx.expr()
+        for i in range(len(prisma)):
+            print(prisma[i].getText())
+        albedo = ctx.column_name()
+        for i in range(len(albedo)):
+            print(albedo[i].getText())
+        print("ingresados "+str(len(albedo))+ " valores con exito")
 
-        #Parametros
-        tableName = ctx.table_name().getText()
-        columnas = ctx.column_name()
-        values = ctx.expr()
+    #Query: update hola set col1 = val1, col2 = val2 where ID = 1
+    def enterUpdate_stmt(self, ctx:sqlParser.Update_stmtContext):
+        col_list = ctx.column_name()
+        for i in range(len(col_list)):
+            print(col_list[i].getText())
+        expr_list = ctx.expr()
+        for i in range(len(expr_list)):
+            print(expr_list[i].getText())
+            if(i==len(expr_list)-1):
+                where=expr_list[i].getText()
+                print(where)
+        print(ctx.table_name().getText())
         
-        hello.insert(self, tableName, columnas, values)
+    def enterDelete_stmt(self, ctx:sqlParser.Delete_stmtContext):
+        #Query: delete from hola where id =1
+        #Aca ctx.expr devuelve un solo valor en comparacion a otros que poseen una lista
+        print(ctx.table_name().getText())
+        print(ctx.expr().getText())
+
+    
+
+    
