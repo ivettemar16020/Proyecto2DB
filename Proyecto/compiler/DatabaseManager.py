@@ -126,22 +126,41 @@ class DatabaseManager:
 
     def showTables(self):
         global database
-        #Se debe arreglar esto 
         tables = os.listdir('../Bases/' + database + '/')
-        print ("Las tablas existentes en " + database + " son: " + tables)
+        print ("Las tablas existentes en " + database + " son: ")
+        for table in tables:
+            print(table)
 
     def dropTable(self, table_name, respuesta): 
+        global database
+        datadir = '../Bases/'+ database +'/' + table_name + ".json"
+        typedir = '../Bases/'+ database +'/' + table_name + "types.json"
+        
         if respuesta == "y": 
-            #drop table
+            os.remove(datadir)
+            os.remove(typedir)
             print ("La tabla '" + table_name + "' ha sido eliminada exitosamente")
         else: 
             print("La tabla '" + table_name + "' no ha sido eliminada")
 
     def alterTabName(self, old_name, new_name): 
-        print(old_name + " " + new_name)
+        global database
+        datadir = '../Bases/'+ database +'/' + old_name + ".json"
+        typedir = '../Bases/'+ database +'/' + old_name + "types.json"
+        newName = new_name + ".json"
+        newTypeName = new_name + "types.json"
+        os.rename(datadir, newName)
+        os.rename(typedir, newTypeName)
+        print("La tabla " + old_name + " ha cambiado a " + new_name)
 
     def showColumns(self, table_name): 
+        global database
         print("Las columnas de la tabla " + table_name + " son: ")
+        tipos = '../Bases/' + database + '/' + table_name + "types.json"
+        with open(tipos) as col_file:
+            cols = json.load(col_file)
+            for p in cols['types']:
+                print(p['column'])
 
     def insert(self, table_name, columns, values): 
         print("Se realizaran los inserts en la tabla: " + table_name)
