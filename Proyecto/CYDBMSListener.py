@@ -28,8 +28,9 @@ class CYDBMSListener(sqlListener):
     def enterDrop_database_stmt(self, ctx:sqlParser.Drop_database_stmtContext):
         #Query: DROP DATABASE nombre; 
         dbName = ctx.database_name().getText()
-        hello.dropDatabase(self, dbName)
-        print("La base de datos " + dbName + " ha sido eliminada")
+        print("¿Está seguro que desea borrar la tabla " + dbName+ "? (y/n)")
+        respuesta = input()
+        hello.dropDatabase(self, dbName, respuesta)
 
     #iv) Muestra las bases de datos actuales 
     def enterShow_databases_stmt(self, ctx:sqlParser.Show_databases_stmtContext):

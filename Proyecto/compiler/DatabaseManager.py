@@ -70,10 +70,14 @@ class DatabaseManager:
         else:
             print("No se realizaron los cambios")
 
-    def dropDatabase(self, name):
+    def dropDatabase(self, name, res):
         directory = '../Bases/' + name + '/'
-        shutil.rmtree(directory, ignore_errors=True)
-
+        if (res == "y"):
+            shutil.rmtree(directory, ignore_errors=True)
+            print("La base de datos " + name + " ha sido eliminada")  
+        else:
+            print("No se elimino la base de datos" + name)
+    
     def useDatabase(self, name): 
         global database
         directory = '../Bases/'
