@@ -26,7 +26,7 @@ class DatabaseManager:
                             json.dump(metadata, data)
                         print(metadata)
                     else:
-                        print(name + ' ya existe, prueba con otro nombre')
+                        print("La base de datos " + name + " ya existe, prueba con otro nombre")
             else: 
                 if not os.path.exists(directory):
                     os.makedirs(directory)
@@ -39,7 +39,7 @@ class DatabaseManager:
                             json.dump(metadata, data)
                         print(metadata)
                     else:
-                        print(name + ' ya existe, prueba con otro nombre')
+                        print("La base de datos " + name + ' ya existe, prueba con otro nombre')
                 else:
                     if not os.path.exists(directory2):
                         print('Creando json')
@@ -49,16 +49,18 @@ class DatabaseManager:
                             json.dump(metadata, data)
                         print(metadata)
                     else:
-                        print(name + ' ya existe, prueba con otro nombre')
+                        print("La base de datos " + name + ' ya existe, prueba con otro nombre')
         except OSError:
                 print ('Error: Creando directorio ' +  directory)
 
 
     def getDatabases(self):
-        bases = os.listdir('../Bases/')
+        root = '../Bases/'
         print("Las bases de datos disponibles son: ")
-        for base in bases: 
-            print(base)
+        dirlist = [ item for item in os.listdir(root) if os.path.isdir(os.path.join(root, item)) ]
+        #Recorre dirlist para imprimir cada base de datos existente
+        for i in dirlist: 
+            print(i)
 
     def alterDatabase(self, oldName, newName, res): 
         directory = '../Bases/'
@@ -76,7 +78,7 @@ class DatabaseManager:
             shutil.rmtree(directory, ignore_errors=True)
             print("La base de datos " + name + " ha sido eliminada")  
         else:
-            print("No se elimino la base de datos" + name)
+            print("No se eliminó la base de datos" + name)
     
     def useDatabase(self, name): 
         global database
