@@ -64,10 +64,36 @@ class CYDBMSListener(sqlListener):
         #viii) Alter table con una accion definida por el usuario 
         specificStmt = ctx.alter_table_specific_stmt()
         #print(specificStmt)
-        #Cuando el query es: "alter table name rename to new_name"
+
+        #isinstance(object,type)
         if (isinstance(specificStmt, sqlParser.AlterRenameToContext)):
+            #Cuando el query es: "alter table name rename to new_name"
             newName = specificStmt.new_table_name().getText()
             hello.alterTabName(self, oldName, newName)
+        
+        elif (isinstance(specificStmt, sqlParser.AlterAddColumnContext)):
+            #Query: ALTER TABLE table_name ADD COLUMN nombre_columna tipo 
+            column_name = specificStmt.column_def().column_name().getText()
+            column_type = specificStmt.column_def().type_name().getText()
+            hello.addColumn(self, oldName, column_name, column_type)
+
+        elif (isinstance(specificStmt, sqlParser.AlterAddConstraintContext)):
+            #Query: ALTER TABLE table_name ADD CONSTRAINT C
+            #ALTER TABLE "table_name"ADD [CONSTRAINT_NAME] [CONSTRAINT_TYPE] [CONSTRAINT_CONDITION];
+            #Prueba con: ALTER TABLE Customer ADD CONSTRAINT Con_First UNIQUE (Address);
+            constraint = specificStmt.table_constraint().column_name()
+            constraint2 = specificStmt.table_constraint().name()
+            constraint_condition = constraint[0].getText()
+            constraint_name = constraint2.getText()
+            hello.addConstraint(self, oldName, constraint, constraint_condition, constraint_name)
+
+        elif (isinstance(specificStmt, sqlParser.AlterDropColumnContext)):
+            #Query: ALTER TABLE table_name DROP COLUMN nombre_columna
+            hello.dropColumn(self, oldName, specificStmt.column_name().getText())
+
+        elif (isinstance(specificStmt, sqlParser.AlterDropConstraintContext)):
+            #Query: ALTER TABLE table_name DROP CONSTRAINT nombre_constraint
+            hello.dropConstraint(self, oldName, specificStmt.name().getText())
 
     #ix) Borra una tabla 
     def enterDrop_table_stmt(self, ctx:sqlParser.Drop_table_stmtContext):

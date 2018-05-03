@@ -157,6 +157,18 @@ class DatabaseManager:
         os.rename(typedir, newTypeName)
         print("La tabla " + old_name + " ha cambiado a " + new_name)
 
+    def addColumn(self, table_name, column_name, column_type): 
+        print("Se agregara la columna " + column_name + " en la tabla " + table_name)
+
+    def addConstraint(self, table_name, constraint, cons_type, cons_name): 
+        print(constraint + cons_type + cons_name)
+
+    def dropColumn(self, table_name, column_name):
+        print("Se eliminará la columna " + column_name + " de la tabla " + table_name)
+
+    def dropConstraint(self, table_name, cons_name):
+        print("Se eliminará el constraint " + cons_name + " de la tabla " + table_name)
+
     def showColumns(self, table_name): 
         global database
         print("Las columnas de la tabla " + table_name + " son: ")
