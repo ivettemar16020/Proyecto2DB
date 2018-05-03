@@ -91,71 +91,88 @@ class DatabaseManager:
 
     def createTable(self, name, columns):
         global database
-        arrColumns = []
-        arrTypes = []
-        for column in columns: 
-            arrColumns.append(column.column_name().getText())
-            arrTypes.append(column.type_name().getText())
+        if (database != ''):  
+            arrColumns = []
+            arrTypes = []
+            for column in columns: 
+                arrColumns.append(column.column_name().getText())
+                arrTypes.append(column.type_name().getText())
 
-        datadir = '../Bases/'+ database +'/' + name + ".json"
-        typedir = '../Bases/'+ database +'/' + name + "types.json"
+            datadir = '../Bases/'+ database +'/' + name + ".json"
+            typedir = '../Bases/'+ database +'/' + name + "types.json"
 
-        numCols = len(arrColumns)
+            numCols = len(arrColumns)
 
-        data = {}
-        data['types'] = []
-        for x in range(0, numCols):
-            data['types'].append({
-                'column': arrColumns[x],
-                'type' : arrTypes[x]
-            })
+            data = {}
+            data['types'] = []
+            for x in range(0, numCols):
+                data['types'].append({
+                    'column': arrColumns[x],
+                    'type' : arrTypes[x]
+                })
 
-        with open(typedir, 'w') as dataT:
-            json.dump(data, dataT)
+            with open(typedir, 'w') as dataT:
+                json.dump(data, dataT)
 
-        dictCols = {}
-        for y in range(0, numCols):
-            dictCols[arrColumns[y]] = ''
+            dictCols = {}
+            for y in range(0, numCols):
+                dictCols[arrColumns[y]] = ''
 
-        data2 = {}
-        data2[name] = []
-        data2[name].append(
-            dictCols
-        )
-        
-        with open(datadir, 'w') as dataD:
-            json.dump(data2, dataD)
-        
-        print("Se creo la tabla " + name)
+            data2 = {}
+            data2[name] = []
+            data2[name].append(
+                dictCols
+            )
+            
+            with open(datadir, 'w') as dataD:
+                json.dump(data2, dataD)
+            
+            print("Se creo la tabla " + name)
+        else: 
+            print("\nERROR\nDebes seleccionar una base de datos para poder realizar esta acción")
+            print("Prueba utilizando 'use database dbName'")
 
     def showTables(self):
         global database
-        tables = os.listdir('../Bases/' + database + '/')
-        print ("Las tablas existentes en " + database + " son: ")
-        for table in tables:
-            print(table)
+        if (database != ''):
+            tables = os.listdir('../Bases/' + database + '/')
+            print ("Las tablas existentes en " + database + " son: ")
+            for table in tables:
+                print(table)
+        else: 
+            print("\nERROR\nDebes seleccionar una base de datos para poder realizar esta acción")
+            print("Prueba utilizando 'use database dbName'")
 
     def dropTable(self, table_name, respuesta): 
         global database
-        datadir = '../Bases/'+ database +'/' + table_name + ".json"
-        typedir = '../Bases/'+ database +'/' + table_name + "types.json"
-        
-        if respuesta == "y": 
-            os.remove(datadir)
-            os.remove(typedir)
-            print ("La tabla '" + table_name + "' ha sido eliminada exitosamente")
+        if (database != ''):
+            datadir = '../Bases/'+ database +'/' + table_name + ".json"
+            typedir = '../Bases/'+ database +'/' + table_name + "types.json"
+            
+            if respuesta == "y": 
+                os.remove(datadir)
+                os.remove(typedir)
+                print ("La tabla '" + table_name + "' ha sido eliminada exitosamente")
+            else: 
+                print("La tabla '" + table_name + "' no ha sido eliminada")
         else: 
-            print("La tabla '" + table_name + "' no ha sido eliminada")
+            print("\nERROR\nDebes seleccionar una base de datos para poder realizar esta acción")
+            print("Prueba utilizando 'use database dbName'")
 
     def alterTabName(self, old_name, new_name): 
         global database
-        datadir = '../Bases/'+ database +'/' + old_name + ".json"
-        typedir = '../Bases/'+ database +'/' + old_name + "types.json"
-        newName = '../Bases/'+ database +'/' + new_name + ".json"
-        newTypeName = '../Bases/'+ database +'/' + new_name + "types.json"
-        os.rename(datadir, newName)
-        os.rename(typedir, newTypeName)
-        print("La tabla " + old_name + " ha cambiado a " + new_name)
+        if (database != ''):
+            datadir = '../Bases/'+ database +'/' + old_name + ".json"
+            typedir = '../Bases/'+ database +'/' + old_name + "types.json"
+            newName = '../Bases/'+ database +'/' + new_name + ".json"
+            newTypeName = '../Bases/'+ database +'/' + new_name + "types.json"
+            os.rename(datadir, newName)
+            os.rename(typedir, newTypeName)
+            print("La tabla " + old_name + " ha cambiado a " + new_name)
+        else: 
+            print("\nERROR\nDebes seleccionar una base de datos para poder realizar esta acción")
+            print("Prueba utilizando 'use database dbName'")
+
 
     def addColumn(self, table_name, column_name, column_type): 
         print("Se agregara la columna " + column_name + " en la tabla " + table_name)

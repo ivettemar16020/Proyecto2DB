@@ -49,7 +49,6 @@ class CYDBMSListener(sqlListener):
         #Query: create table hola(column1 hola);
         #Query con constraint: create table people (ID int, constraint PRIMARY KEY(ID));
         #Query 2 constraints: create table People(ID int, Name String, CONSTRAINT PK_Person PRIMARY KEY (ID), CONSTRAINT PAL FOREIGN KEY (Name) REFERENCES Potato(Name))
-        print("Creando tabla")
         #print(ctx.table_name().getText())
         hello.createTable(self, ctx.table_name().getText(), ctx.column_def())
         constraint_list = ctx.table_constraint()
