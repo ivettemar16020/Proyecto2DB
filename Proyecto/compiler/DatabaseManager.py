@@ -151,8 +151,8 @@ class DatabaseManager:
         global database
         datadir = '../Bases/'+ database +'/' + old_name + ".json"
         typedir = '../Bases/'+ database +'/' + old_name + "types.json"
-        newName = new_name + ".json"
-        newTypeName = new_name + "types.json"
+        newName = '../Bases/'+ database +'/' + new_name + ".json"
+        newTypeName = '../Bases/'+ database +'/' + new_name + "types.json"
         os.rename(datadir, newName)
         os.rename(typedir, newTypeName)
         print("La tabla " + old_name + " ha cambiado a " + new_name)
