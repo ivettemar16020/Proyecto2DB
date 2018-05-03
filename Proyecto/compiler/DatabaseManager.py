@@ -119,8 +119,8 @@ class DatabaseManager:
                 dictCols[arrColumns[y]] = ''
 
             data2 = {}
-            data2[name] = []
-            data2[name].append(
+            data2['database'] = []
+            data2['database'].append(
                 dictCols
             )
             
@@ -285,7 +285,7 @@ class DatabaseManager:
                 print("El tipo de dato es char")
                 
         
-        print(dictData)
+        
         tableD['database'].append(
             dictData
         )
