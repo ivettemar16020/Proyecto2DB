@@ -231,17 +231,22 @@ class DatabaseManager:
             dictData[columnsF[y]] = valuesF[y]
 
         for value in values:
+            count3=0
             print(value.getText())
             try:
                 if("." not in value.getText()):
                     int_value = int(value.getText())
                     print("es un entero")
+                    count1=0
             except ValueError:
                 print("No es un entero")
+                count1=1
             try:
                 float_value = float(value.getText())
+                count2=0
             except ValueError:
                 print("no es un float")
+                count2=1
             try:
                 if(value.getText().count('-')==2):
                     print("es una fecha")
@@ -249,19 +254,36 @@ class DatabaseManager:
                     separacion = fecha.split("-")
                     if(int(separacion[0])<=2018):
                         print("Año proporcionado es valido")
+                        sub1=0
                     else:
                         print("El año ingresado supera el año actual")
+                        sub1=1
+                        count3=1
                     if(int(separacion[1])<=12 and int(separacion[1])>0):
                         print("el mes proporcionado es valido")
+                        sub2=0
                     else:
                         print("El mes proporcionado no es valido")
+                        sub2=1
+                        count3=1
                     if(int(separacion[2])<=31 and int(separacion[2])>0):
                         print("el dia proporcionado es valido")
+                        sub3=0
                     else:
                         print("El dia no es valido")
-                    
+                        sub3=1
+                        count3=1
+                    if(sub1==0 and sub2==0 and sub3==0):
+                        print("La fecha entera es valida")
+                        count3=0
+                else:
+                    count3=1
+                
             except ValueError:
                     print("no es una fecha")
+            if(count1==1 and count2==1 and count3==1):
+                print("El tipo de dato es char")
+                
         
         print(dictData)
         tableD['database'].append(
