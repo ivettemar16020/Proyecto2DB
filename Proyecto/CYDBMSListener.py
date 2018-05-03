@@ -149,6 +149,16 @@ class CYDBMSListener(sqlListener):
         print(ctx.table_name().getText())
         print(ctx.expr().getText())
 
+    def enterJoin_clause(self, ctx:sqlParser.Join_clauseContext):
+    #Query: select * from tab1 left join tab2 on tab1.name = tab2.name
+        tablaysub = ctx.table_or_subquery()
+        for i in range(len(tablaysub)):
+            print(tablaysub[i].getText())
+
+        op_list = ctx.join_constraint()
+        for i in range(len(op_list)):
+            print(op_list[i].getText())
+
     
 
     

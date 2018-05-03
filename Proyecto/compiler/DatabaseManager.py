@@ -230,6 +230,39 @@ class DatabaseManager:
         for y in range(0, numCols):
             dictData[columnsF[y]] = valuesF[y]
 
+        for value in values:
+            print(value.getText())
+            try:
+                if("." not in value.getText()):
+                    int_value = int(value.getText())
+                    print("es un entero")
+            except ValueError:
+                print("No es un entero")
+            try:
+                float_value = float(value.getText())
+            except ValueError:
+                print("no es un float")
+            try:
+                if(value.getText().count('-')==2):
+                    print("es una fecha")
+                    fecha = value.getText()
+                    separacion = fecha.split("-")
+                    if(int(separacion[0])<=2018):
+                        print("Año proporcionado es valido")
+                    else:
+                        print("El año ingresado supera el año actual")
+                    if(int(separacion[1])<=12 and int(separacion[1])>0):
+                        print("el mes proporcionado es valido")
+                    else:
+                        print("El mes proporcionado no es valido")
+                    if(int(separacion[2])<=31 and int(separacion[2])>0):
+                        print("el dia proporcionado es valido")
+                    else:
+                        print("El dia no es valido")
+                    
+            except ValueError:
+                    print("no es una fecha")
+        
         print(dictData)
         tableD['database'].append(
             dictData
