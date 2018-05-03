@@ -196,10 +196,46 @@ class DatabaseManager:
                 print(p['column'])
 
     def insert(self, table_name, columns, values): 
-        print("Se realizaran los inserts en la tabla: " + table_name)
+        global database
+        data = '../Bases/' + database + '/' + table_name + ".json"
+        tipos = '../Bases/' + database + '/' + table_name + "types.json"
+        arrCols = []
         
-        for column in columns:
-            print(column.getText()) 
+        with open(tipos) as col_file:
+            cols = json.load(col_file)
+            for p in cols['types']:
+                arrCols.append(p['column'])
+        cantCols = len(arrCols)
+        
+        numColss = len(columns)
+        columnsF = []
+        for col in range(0, numColss):
+            columnsF.append(columns[col].getText())
+        
+        numVals = len(values)
+        valuesF = []
+        for v in range(0,numVals):
+            valuesF.append(values[v].getText())
 
-        for value in values: 
-            print(value.getText())
+        for x in range(cantCols):
+            if arrCols[x] not in columnsF:
+                columnsF.append(arrCols[x])
+                valuesF.append('NULL')
+        numCols = len(columnsF)
+        
+        with open(data) as json_file:
+            tableD = json.load(json_file)
+
+        dictData = {}
+        for y in range(0, numCols):
+            dictData[columnsF[y]] = valuesF[y]
+
+        print(dictData)
+        tableD['database'].append(
+            dictData
+        )
+
+        with open(data, 'w') as dataD:
+            json.dump(tableD, dataD)
+        
+        print("Se realizaron los inserts en la tabla: " + table_name)
