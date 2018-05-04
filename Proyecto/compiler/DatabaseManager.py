@@ -177,7 +177,37 @@ class DatabaseManager:
 
 
     def addColumn(self, table_name, column_name, column_type): 
+        global database
         print("Se agregara la columna " + column_name + " en la tabla " + table_name)
+        tipos = '../Bases/'+ database +'/' + table_name + "types.json"
+        
+        with open(tipos) as col_file:
+            cols = json.load(col_file)
+        
+        cols['types'].append({
+            'column': column_name,
+            'type': column_type
+        })
+        
+        with open(tipos, 'w') as dataT:
+            json.dump(cols, dataT)
+
+        data = '../Bases/'+ database +'/' + table_name + ".json"
+        
+        with open(data) as json_file:
+            tableD = json.load(json_file)
+        
+        dictTemp = {}
+        cantReg = len(tableD['database'])
+        for x in range (0,cantReg):
+            dictTemp = tableD['database'].pop(0)
+            dictTemp[column_name] = "NULL"
+            tableD['database'].append(
+                dictTemp
+	        )
+        
+        with open(data, 'w') as dataD:
+            json.dump(tableD, dataD)
 
     def addConstraint(self, table_name, constraint, cons_type, cons_name): 
         print(constraint + cons_type + cons_name)
