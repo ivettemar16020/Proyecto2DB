@@ -418,14 +418,17 @@ class DatabaseManager:
 
         tableDA = {}
         tableDA['database'] = []
+        i = 0
 
         for x in tableD['database']:
             if (x[column_name] != value):
                 tableDA['database'].append(x)
             else:
-                print(" ")
+                i = i+1
         with open(data, 'w') as dataD:
             json.dump(tableDA, dataD)
+        
+        print("se eliminaron: " + i + " registros de la tabla " + table_name)  
 
     def select(self, columns, tables, expr): 
         print(columns[0].getText())
@@ -433,13 +436,41 @@ class DatabaseManager:
         print(expr[0].getText())
 
     def update(self, columns, values, conditions, table_name):
+        global database
         print("UPDATE en la tabla " + table_name)
         #Columns es el array de las columnas que desea cambiar
+        column_name_u = []
+        value_u = []
+        data = '../Bases/' + database + '/' + table_name + ".json"
         for i in range(len(columns)):
-            print(columns[i].getText())
+            column_name_u.append(columns[i].getText())
         #Values es el array de los valores 
         for i in range(len(values)):
-            print(values[i].getText())
+            value_u.append(values[i].getText())
         #Conditions el array de condiciones
-        for i in conditions: 
-            print(i)
+        exprSplit = conditions.split('=')
+        column_name_c = exprSplit[0]
+        value_c = exprSplit[1]
+        lenCol = len(column_name_u)
+
+        with open(data) as json_file:
+            tableD = json.load(json_file)
+
+        tableDA = {}
+        tableDA['database'] = []
+        a = 0
+        for x in tableD['database']:
+            if (x[column_name_c] != value_c):
+                tableDA['database'].append(x)
+            else:
+                for y in range(0, lenCol):
+                    x[column_name_u[y]] = value_u[y]
+                tableDA['database'].append(x)
+                a = a + 1
+
+        with open(data, 'w') as dataD:
+            json.dump(tableDA, dataD)
+
+        print("se actualizaron: " + a + " registros de la tabla " + table_name)
+
+        
