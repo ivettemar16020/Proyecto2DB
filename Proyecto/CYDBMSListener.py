@@ -43,7 +43,6 @@ class CYDBMSListener(sqlListener):
         name = ctx.database_name().getText()
         hello.useDatabase(self, name)
 
-   
    #vi) Crea una nueva tabla y un nuevo archivo 
     def enterCreate_table_stmt(self, ctx:sqlParser.Create_table_stmtContext):
         #Query: create table hola(column1 hola);
