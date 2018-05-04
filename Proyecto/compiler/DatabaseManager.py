@@ -432,12 +432,42 @@ class DatabaseManager:
 
     def select(self, columns, tables, expr):
         data = '../Bases/' + database + '/' + tables[0].getText() + ".json"
+        tipos = '../Bases/' + database + '/' + tables[0].getText() + "types.json"
         with open(data, 'r') as json_file:
             tableD = json.load(json_file)
             print(json.dumps(tableD, indent=4, sort_keys=True))
 
         #Query = select type from People where a=b
-       # print(tableD["types"][0][columns[0].getText()])
+        # print(tableD["types"][0][columns[0].getText()])
+        
+        for i in range(len(columns)):
+            column_name_s.append(columns[i].getText())
+
+        lenCol = len(column_name_s)
+        exprSplit = expr.split('=')
+        column_name_c = exprSplit[0]
+        value_c = exprSplit[1]
+
+        strCols = ""
+
+        for c in column_name_s:
+            strCols = strCols + " | " + c
+
+        print (strCols)
+
+        with open(data) as json_file:
+            tableD = json.load(json_file)
+
+        strVal= ""
+
+        for x in tableD['database']:
+            if (x[column_name_c] == value_c):
+                for o in range (0, lenCol):
+                    coluo = column_name_s[o]
+                    olo = x[coluo]
+                    strVal = strVal + " | " + olo
+                print (strVal)
+                strVal = ""
 
     def update(self, columns, values, conditions, table_name):
         global database
