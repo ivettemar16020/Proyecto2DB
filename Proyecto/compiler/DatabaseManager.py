@@ -451,10 +451,17 @@ class DatabaseManager:
         for i in range(len(values)):
             value_u.append(values[i].getText())
         #Conditions el array de condiciones
-        exprSplit = conditions.split('=')
-        column_name_c = exprSplit[0]
-        value_c = exprSplit[1]
+        try:
+            exprSplit = conditions[0].split('=')
+            column_name_c = exprSplit[0]
+            value_c = exprSplit[1]
+        except:
+            column_name_c = "1"
+            value_c = "1"
+            
         lenCol = len(column_name_u)
+
+
 
         with open(data) as json_file:
             tableD = json.load(json_file)
