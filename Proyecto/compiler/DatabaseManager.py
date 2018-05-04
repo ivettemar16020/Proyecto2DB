@@ -213,7 +213,41 @@ class DatabaseManager:
         print(constraint + cons_type + cons_name)
 
     def dropColumn(self, table_name, column_name):
+        global database
         print("Se eliminará la columna " + column_name + " de la tabla " + table_name)
+        tipos = '../Bases/'+ database +'/' + table_name + "types.json"
+        
+        with open(tipos) as col_file:
+            cols = json.load(col_file)
+        
+        for c in cols['types']:
+            if (c['column'] == column_name):
+                column_type = c['type']
+        
+        cols['types'].remove({
+            'column': column_name,
+            'type': column_type
+        })
+        
+        with open(tipos, 'w') as dataT:
+            json.dump(cols, dataT)
+
+        data = '../Bases/'+ database +'/' + table_name + ".json"
+        
+        with open(data) as json_file:
+            tableD = json.load(json_file)
+        
+        dictTemp = {}
+        cantReg = len(tableD['database'])
+        for x in range (0,cantReg):
+            dictTemp = tableD['database'].pop(0)
+            del dictTemp[column_name]
+            tableD['database'].append(
+                dictTemp
+	        )
+        
+        with open(data, 'w') as dataD:
+            json.dump(tableD, dataD)
 
     def dropConstraint(self, table_name, cons_name):
         print("Se eliminará el constraint " + cons_name + " de la tabla " + table_name)
