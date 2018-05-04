@@ -430,10 +430,13 @@ class DatabaseManager:
         
         print("se eliminaron: " + i + " registros de la tabla " + table_name)  
 
-    def select(self, columns, tables, expr): 
-        print(columns[0].getText())
-        print(tables[0].getText())
-        print(expr[0].getText())
+    def select(self, columns, tables, expr):
+        data = '../Bases/' + database + '/' + tables[0].getText() + "types.json"
+        with open(data, 'r') as json_file:
+            tableD = json.load(json_file) 
+
+        #Query = select type from People where a=b
+        print(tableD["types"][0][columns[0].getText()])
 
     def update(self, columns, values, conditions, table_name):
         global database
