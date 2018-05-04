@@ -147,8 +147,10 @@ class CYDBMSListener(sqlListener):
         #Query: delete from hola where id =1
         #Aca ctx.expr devuelve un solo valor en comparacion a otros que poseen una lista
         print(ctx.table_name().getText())
-        print(ctx.expr().getText())
-
+        try:
+            print(ctx.expr().getText())
+        except:
+            print("no hay juer")
     def enterJoin_clause(self, ctx:sqlParser.Join_clauseContext):
     #Query: select * from tab1 left join tab2 on tab1.name = tab2.name
         tablaysub = ctx.table_or_subquery()
