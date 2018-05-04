@@ -91,7 +91,7 @@ class DatabaseManager:
         else:
             print("La base de datos a la que desea acceder no existe")
 
-    def createTable(self, name, columns):
+    def createTable(self, name, columns, constraint):
         global database
         if (database != ''):  
             arrColumns = []
@@ -107,6 +107,44 @@ class DatabaseManager:
 
             data = {}
             data['types'] = []
+
+            #CONSTRAINTS
+            if (constraint != []): #Mientras existan los constraints
+                i = 0
+                while (i < len(constraint)): 
+                    name = constraint[i].name().getText()
+                    if constraint[i].K_PRIMARY() != None:
+                        #print("PRIMARY " + name)
+                        data['types'].append({
+                            'column': name,
+                            'type' : "PRIMARY"
+                            })
+                    elif constraint[i].K_FOREIGN() != None:
+                        refer = constraint[i].foreign_key_clause().getText()
+                        #print("FOREIGN " + name)
+                        data['types'].append({
+                            'column': name,
+                            'type' : "FOREIGN KEY",
+                            'reference' : refer
+                            })
+                    elif constraint[i].K_CHECK() != None: 
+                        #print("CHECK " + name)
+                        exp = constraint[i].expr().getText()
+                        data['types'].append({
+                            'column': name,
+                            'type' : "CHECK",
+                            'expresion' : exp
+                            })
+                    elif constraint[i].K_UNIQUE() != None:
+                        #print("UNIQUE " + name)
+                        col = constraint[i].getText()
+                        data['types'].append({
+                            'column': name,
+                            'type' : "UNIQUE",
+                            'colName' : col
+                            })
+                    i += 1
+
             for x in range(0, numCols):
                 data['types'].append({
                     'column': arrColumns[x],

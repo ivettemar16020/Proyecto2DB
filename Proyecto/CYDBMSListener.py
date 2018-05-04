@@ -50,10 +50,13 @@ class CYDBMSListener(sqlListener):
         #Query con constraint: create table people (ID int, constraint PRIMARY KEY(ID));
         #Query 2 constraints: create table People(ID int, Name String, CONSTRAINT PK_Person PRIMARY KEY (ID), CONSTRAINT PAL FOREIGN KEY (Name) REFERENCES Potato(Name))
         #print(ctx.table_name().getText())
-        hello.createTable(self, ctx.table_name().getText(), ctx.column_def())
+        hello.createTable(self, ctx.table_name().getText(), ctx.column_def(), ctx.table_constraint())
+        #Revisando que guarda table_constraint
+        """
         constraint_list = ctx.table_constraint()
         for i in range(len(constraint_list)):
             print(constraint_list[i].getText())
+        """
 
     #vii)Cambia el nombre de una tabla 
     def enterAlter_table_stmt(self, ctx:sqlParser.Alter_table_stmtContext):

@@ -1,0 +1,1 @@
+{"types": [{"column": "PK_Person", "type": "PRIMARY"}, {"column": "PAL", "type": "FOREIGN KEY", "reference": "REFERENCESPotato(Name)"}, {"column": "UC_Person", "type": "UNIQUE", "colName": "CONSTRAINTUC_PersonUNIQUE(ID,LastName)"}, {"column": "ID", "type": "int"}, {"column": "Name", "type": "String"}]}
