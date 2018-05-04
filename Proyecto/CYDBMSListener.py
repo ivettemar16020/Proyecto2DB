@@ -148,9 +148,11 @@ class CYDBMSListener(sqlListener):
     def enterDelete_stmt(self, ctx:sqlParser.Delete_stmtContext):
         #Query: delete from hola where id =1
         #Aca ctx.expr devuelve un solo valor en comparacion a otros que poseen una lista
-        print(ctx.table_name().getText())
+        name = ctx.table_name().getText()
+        expW = ctx.expr().getText()
         try:
-            print(ctx.expr().getText())
+            print("Entro")
+            hello.delete(self, name, expW)
         except:
             print("Borrando todas las filas")
             column_list = hello.showColumns(self,ctx.table_name().getText())
@@ -160,6 +162,7 @@ class CYDBMSListener(sqlListener):
                     hello.addColumn(self,ctx.table_name().getText(),column_list[i])
                 except:
                     print("No se logro la operacion")
+
     def enterJoin_clause(self, ctx:sqlParser.Join_clauseContext):
     #Query: select * from tab1 left join tab2 on tab1.name = tab2.name
         tablaysub = ctx.table_or_subquery()

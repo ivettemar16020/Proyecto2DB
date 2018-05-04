@@ -403,3 +403,10 @@ class DatabaseManager:
             json.dump(tableD, dataD)
         
         print("Se realizaron los inserts en la tabla: " + table_name)
+
+    def delete(self, table_name, expr):
+        print("Se eliminará de la tabla " + table_name + " lo que cumpla con " + expr)
+        #Split string expr
+        exprSplit = expr.split('=')
+        columna = exprSplit[0]
+        print(exprSplit[0])
