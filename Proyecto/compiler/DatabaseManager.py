@@ -405,8 +405,24 @@ class DatabaseManager:
         print("Se realizaron los inserts en la tabla: " + table_name)
 
     def delete(self, table_name, expr):
+        global database
         print("Se eliminará de la tabla " + table_name + " lo que cumpla con " + expr)
         #Split string expr
         exprSplit = expr.split('=')
-        columna = exprSplit[0]
-        print(exprSplit[0])
+        column_name = exprSplit[0]
+        value = exprSplit[1]
+        data = '../Bases/' + database + '/' + table_name + ".json"
+
+        with open(data) as json_file:
+            tableD = json.load(json_file)
+
+        tableDA = {}
+        tableDA['database'] = []
+
+        for x in tableD['database']:
+            if (x[column_name] != value):
+                tableDA['database'].append(x)
+            else:
+                print(" ")
+        with open(data, 'w') as dataD:
+            json.dump(tableDA, dataD)
