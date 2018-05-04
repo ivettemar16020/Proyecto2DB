@@ -439,7 +439,7 @@ class DatabaseManager:
 
         #Query = select type from People where a=b
         # print(tableD["types"][0][columns[0].getText()])
-        
+        column_name_s = []
         for i in range(len(columns)):
             column_name_s.append(columns[i].getText())
 
