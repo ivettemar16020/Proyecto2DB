@@ -130,20 +130,23 @@ class CYDBMSListener(sqlListener):
     #SELECT 
     def enterSelect_core(self, ctx:sqlParser.Select_coreContext):
         #Query: Select * from table_name;
-        print("Entro al select")
+        #Query: SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate FROM Orders INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+        columns = ctx.result_column()
+        tables = ctx.table_or_subquery()
+        expr = ctx.expr()
+
+        hello.select(self, columns, tables, expr)
 
     #Query: update hola set col1 = val1, col2 = val2 where ID = 1
     def enterUpdate_stmt(self, ctx:sqlParser.Update_stmtContext):
         col_list = ctx.column_name()
-        for i in range(len(col_list)):
-            print(col_list[i].getText())
         expr_list = ctx.expr()
+        conditions = []
         for i in range(len(expr_list)):
-            print(expr_list[i].getText())
             if(i==len(expr_list)-1):
-                where=expr_list[i].getText()
-                print(where)
-        print(ctx.table_name().getText())
+                conditions.append(expr_list[i].getText())
+
+        hello.update(self, col_list, expr_list, conditions, ctx.table_name().getText())
         
     def enterDelete_stmt(self, ctx:sqlParser.Delete_stmtContext):
         #Query: delete from hola where id =1

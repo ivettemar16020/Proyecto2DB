@@ -426,3 +426,20 @@ class DatabaseManager:
                 print(" ")
         with open(data, 'w') as dataD:
             json.dump(tableDA, dataD)
+
+    def select(self, columns, tables, expr): 
+        print(columns[0].getText())
+        print(tables[0].getText())
+        print(expr[0].getText())
+
+    def update(self, columns, values, conditions, table_name):
+        print("UPDATE en la tabla " + table_name)
+        #Columns es el array de las columnas que desea cambiar
+        for i in range(len(columns)):
+            print(columns[i].getText())
+        #Values es el array de los valores 
+        for i in range(len(values)):
+            print(values[i].getText())
+        #Conditions el array de condiciones
+        for i in conditions: 
+            print(i)
