@@ -292,12 +292,17 @@ class DatabaseManager:
 
     def showColumns(self, table_name): 
         global database
+        column_list=[]
+        i=0
         print("Las columnas de la tabla " + table_name + " son: ")
         tipos = '../Bases/' + database + '/' + table_name + "types.json"
         with open(tipos) as col_file:
             cols = json.load(col_file)
             for p in cols['types']:
                 print(p['column'])
+                column_list.append(p['column'])
+                
+        return column_list
 
     def insert(self, table_name, columns, values): 
         global database

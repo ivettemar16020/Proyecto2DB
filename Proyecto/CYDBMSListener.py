@@ -153,7 +153,14 @@ class CYDBMSListener(sqlListener):
         try:
             print(ctx.expr().getText())
         except:
-            print("no hay juer")
+            print("Borrando todas las filas")
+            column_list = hello.showColumns(self,ctx.table_name().getText())
+            for i in range(len(column_list)):
+                try:
+                    hello.dropColumn(self,ctx.table_name().getText(),column_list[i])
+                    hello.addColumn(self,ctx.table_name().getText(),column_list[i])
+                except:
+                    print("No se logro la operacion")
     def enterJoin_clause(self, ctx:sqlParser.Join_clauseContext):
     #Query: select * from tab1 left join tab2 on tab1.name = tab2.name
         tablaysub = ctx.table_or_subquery()
