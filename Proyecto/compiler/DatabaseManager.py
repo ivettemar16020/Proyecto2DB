@@ -444,7 +444,7 @@ class DatabaseManager:
             column_name_s.append(columns[i].getText())
 
         lenCol = len(column_name_s)
-        exprSplit = expr.split('=')
+        exprSplit = expr[0].getText().split('=')
         column_name_c = exprSplit[0]
         value_c = exprSplit[1]
 

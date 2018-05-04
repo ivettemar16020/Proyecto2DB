@@ -134,6 +134,8 @@ class CYDBMSListener(sqlListener):
         columns = ctx.result_column()
         tables = ctx.table_or_subquery()
         expr = ctx.expr()
+        hello.select(self, columns, tables, expr)
+        """
         try:
             print(expr[0].getText())
             for i in range(len(tables)):
@@ -142,6 +144,7 @@ class CYDBMSListener(sqlListener):
         except:
             print("No hay where")
             hello.select(self, columns, tables, expr)
+        """
 
     #Query: update hola set col1 = val1, col2 = val2 where ID = 1
     def enterUpdate_stmt(self, ctx:sqlParser.Update_stmtContext):
