@@ -433,10 +433,11 @@ class DatabaseManager:
     def select(self, columns, tables, expr):
         data = '../Bases/' + database + '/' + tables[0].getText() + "types.json"
         with open(data, 'r') as json_file:
-            tableD = json.load(json_file) 
+            tableD = json.load(json_file)
+            print(json.dumps(tableD, indent=4, sort_keys=True))
 
         #Query = select type from People where a=b
-        print(tableD["types"][0][columns[0].getText()])
+       # print(tableD["types"][0][columns[0].getText()])
 
     def update(self, columns, values, conditions, table_name):
         global database
