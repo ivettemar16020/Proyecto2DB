@@ -411,24 +411,30 @@ class DatabaseManager:
         exprSplit = expr.split('=')
         column_name = exprSplit[0]
         value = exprSplit[1]
-        data = '../Bases/' + database + '/' + table_name + ".json"
-
-        with open(data) as json_file:
-            tableD = json.load(json_file)
-
-        tableDA = {}
-        tableDA['database'] = []
-        i = 0
-
-        for x in tableD['database']:
-            if (x[column_name] != value):
-                tableDA['database'].append(x)
-            else:
-                i = i+1
-        with open(data, 'w') as dataD:
-            json.dump(tableDA, dataD)
         
-        print("se eliminaron: " + i + " registros de la tabla " + table_name)  
+        data = '../Bases/' + database + '/' + table_name + ".json"
+        
+        try:
+            with open(data) as json_file:
+                tableD = json.load(json_file)
+
+            tableDA = {}
+            tableDA['database'] = []
+            i = 0
+
+            for x in tableD['database']:
+                if (x[column_name] != value):
+                    tableDA['database'].append(x)
+                else:
+                    i = i+1
+            with open(data, 'w') as dataD:
+                json.dump(tableDA, dataD)
+            
+            print("se eliminaron: " + i + " registros de la tabla " + table_name)  
+
+        except:
+            print("you is dead boy")
+            
 
     def select(self, columns, tables, expr):
         global database

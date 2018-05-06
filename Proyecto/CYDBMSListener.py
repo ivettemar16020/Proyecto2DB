@@ -161,8 +161,9 @@ class CYDBMSListener(sqlListener):
         #Query: delete from hola where id =1
         #Aca ctx.expr devuelve un solo valor en comparacion a otros que poseen una lista
         name = ctx.table_name().getText()
-        expW = ctx.expr().getText()
+        
         try:
+            expW = ctx.expr().getText()
             print(ctx.expr().getText())
             print("Entro")
             hello.delete(self, name, expW)
