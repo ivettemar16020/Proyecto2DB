@@ -163,6 +163,7 @@ class CYDBMSListener(sqlListener):
         name = ctx.table_name().getText()
         expW = ctx.expr().getText()
         try:
+            print(ctx.expr().getText())
             print("Entro")
             hello.delete(self, name, expW)
         except:
