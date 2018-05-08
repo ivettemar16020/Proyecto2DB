@@ -114,17 +114,19 @@ class DatabaseManager:
                 while (i < len(constraint)): 
                     name = constraint[i].name().getText()
                     if constraint[i].K_PRIMARY() != None:
-                        #print("PRIMARY " + name)
+                        print("PRIMARY " + arrTypes[i])
                         data['types'].append({
                             'column': name,
-                            'type' : "PRIMARY"
+                            'type' : arrTypes[i],
+                            'constraint' : "PRIMARY"
                             })
                     elif constraint[i].K_FOREIGN() != None:
                         refer = constraint[i].foreign_key_clause().getText()
                         #print("FOREIGN " + name)
                         data['types'].append({
                             'column': name,
-                            'type' : "FOREIGN KEY",
+                            'type' : arrTypes[i],
+                            'constraint': "FOREIGN KEY",
                             'reference' : refer
                             })
                     elif constraint[i].K_CHECK() != None: 
@@ -132,7 +134,8 @@ class DatabaseManager:
                         exp = constraint[i].expr().getText()
                         data['types'].append({
                             'column': name,
-                            'type' : "CHECK",
+                            'type' : arrTypes[i],
+                            'constraint': "CHECK",
                             'expresion' : exp
                             })
                     elif constraint[i].K_UNIQUE() != None:
@@ -140,7 +143,8 @@ class DatabaseManager:
                         col = constraint[i].getText()
                         data['types'].append({
                             'column': name,
-                            'type' : "UNIQUE",
+                            'type' : arrTypes[i],
+                            'constraint': "UNIQUE",
                             'colName' : col
                             })
                     i += 1
