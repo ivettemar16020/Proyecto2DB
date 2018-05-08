@@ -1,0 +1,1 @@
+{"types": [{"column": "pk", "type": "PRIMARY"}, {"column": "id", "type": "int"}, {"column": "nombre", "type": "varchar(100)"}, {"column": "uso", "type": "varchar(100)"}, {"column": "modelo", "type": "int"}, {"column": "cantidad", "type": "int"}, {"column": "error", "type": "float"}]}

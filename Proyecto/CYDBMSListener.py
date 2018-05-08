@@ -90,7 +90,10 @@ class CYDBMSListener(sqlListener):
 
         elif (isinstance(specificStmt, sqlParser.AlterDropColumnContext)):
             #Query: ALTER TABLE table_name DROP COLUMN nombre_columna
-            hello.dropColumn(self, oldName, specificStmt.column_name().getText())
+            try: 
+                hello.dropColumn(self, oldName, specificStmt.column_name().getText())
+            except: 
+                print("Problemas drop column")
 
         elif (isinstance(specificStmt, sqlParser.AlterDropConstraintContext)):
             #Query: ALTER TABLE table_name DROP CONSTRAINT nombre_constraint
@@ -161,6 +164,7 @@ class CYDBMSListener(sqlListener):
         #Query: delete from hola where id =1
         #Aca ctx.expr devuelve un solo valor en comparacion a otros que poseen una lista
         name = ctx.table_name().getText()
+        a=0
         
         try:
             expW = ctx.expr().getText()
@@ -169,11 +173,13 @@ class CYDBMSListener(sqlListener):
             hello.delete(self, name, expW)
         except:
             print("Borrando todas las filas")
-            column_list = hello.showColumns(self,ctx.table_name().getText())
-            for i in range(len(column_list)):
+            column_list = hello.showColumns(self,name)
+            for i in column_list:
                 try:
-                    hello.dropColumn(self,ctx.table_name().getText(),column_list[i])
-                    hello.addColumn(self,ctx.table_name().getText(),column_list[i])
+                    print("column " + column_list[a])
+                    #hello.dropColumn(self,name,column_list[a])
+                    hello.addColumn(self,name,column_list[a],"default")
+                    a += 1
                 except:
                     print("No se logro la operacion")
 

@@ -252,7 +252,7 @@ class DatabaseManager:
 
     def dropColumn(self, table_name, column_name):
         global database
-        print("Se eliminará la columna " + column_name + " de la tabla " + table_name)
+        print("Se eliminará la columna " + column_name + " de la tabla " + table_name + " db = " + database)
         tipos = '../Bases/'+ database +'/' + table_name + "types.json"
         
         with open(tipos) as col_file:
