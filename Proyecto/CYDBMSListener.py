@@ -176,8 +176,8 @@ class CYDBMSListener(sqlListener):
             column_list = hello.showColumns(self,name)
             for i in column_list:
                 try:
-                    print("column " + column_list[a])
-                    #hello.dropColumn(self,name,column_list[a])
+                    #print("column " + column_list[a])
+                    hello.dropColumn(self,name,column_list[a])
                     hello.addColumn(self,name,column_list[a],"default")
                     a += 1
                 except:
